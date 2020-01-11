@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "phantompillows",
+	"version": "${version}",
+	"name": "Phantom Pillows",
+	"description": "A block that prevents elytra collision damage.",
+	"authors": [
+		"haykam821"
+	],
+	"contact": {
+		"homepage": "https://github.com/haykam821/Phantom-Pillows#readme",
+		"issues": "https://github.com/haykam821/Phantom-Pillows/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/phantompillows/icon.png",
+	"entrypoints": {
+		"main": [
+			"io.github.haykam821.phantompillows.Main"
+		]
+	},
+	"mixins": [
+		"phantompillows.mixin.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.4.0",
+		"fabric": "*"
+	}
+}
