@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"mmm",
+		"mWm",
+		"mmm"
+	],
+	"key": {
+		"m": {
+			"item": "minecraft:phantom_membrane"
+		},
+		"W": {
+			"tag": "minecraft:wool"
+		}
+	},
+	"result": {
+		"item": "phantompillows:phantom_pillow"
+	}
+}
