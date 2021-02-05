@@ -14,21 +14,22 @@ public class PillowBlock extends Block {
 		super(settings);
 	}
 
-	public void onLandedUpon(World world, BlockPos blockPos, Entity entity, float f) {
-		entity.playSound(SoundEvents.BLOCK_WOOL_FALL, 1.0F, 1.0F);
-		entity.handleFallDamage(f, 0.0F);
+	@Override
+	public void onLandedUpon(World world, BlockPos pos, Entity entity, float distance) {
+		entity.playSound(SoundEvents.BLOCK_WOOL_FALL, 1, 1);
+		entity.handleFallDamage(distance, 0);
 	}
 
-	public void onEntityLand(BlockView blockView, Entity entity) {
+	@Override
+	public void onEntityLand(BlockView world, Entity entity) {
 		if (entity.bypassesLandingEffects()) {
-			super.onEntityLand(blockView, entity);
+			super.onEntityLand(world, entity);
 		} else {
-			Vec3d vec3d = entity.getVelocity();
-			if (vec3d.y < 0.0D) {
-				double livingModifier = entity instanceof LivingEntity ? 1.0D : 0.8D;
-				entity.setVelocity(vec3d.x, vec3d.y * livingModifier * -0.8, vec3d.z);
+			Vec3d velocity = entity.getVelocity();
+			if (velocity.y < 0) {
+				double livingModifier = entity instanceof LivingEntity ? 1 : 0.8;
+				entity.setVelocity(velocity.x, velocity.y * livingModifier * -0.8, velocity.z);
 			}
 		}
-
 	}
 }

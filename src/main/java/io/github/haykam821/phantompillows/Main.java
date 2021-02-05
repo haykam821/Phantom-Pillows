@@ -16,8 +16,6 @@ public class Main implements ModInitializer {
 	public static final Block PHANTOM_PILLOW = new PillowBlock(FabricBlockSettings.copy(Blocks.LIGHT_GRAY_WOOL));
 	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
-	
-
 	@Override
 	public void onInitialize() {
 		Registry.register(Registry.BLOCK, PHANTOM_PILLOW_ID, PHANTOM_PILLOW);
