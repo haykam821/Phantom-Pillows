@@ -11,8 +11,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class Main implements ModInitializer {
-	private static final Identifier PHANTOM_PILLOW_ID = new Identifier("phantompillows", "phantom_pillow");
+	public static final String MOD_ID = "phantompillows";
 
+	private static final Identifier PHANTOM_PILLOW_ID = new Identifier(MOD_ID, "phantom_pillow");
 	public static final Block PHANTOM_PILLOW = new PillowBlock(FabricBlockSettings.copy(Blocks.LIGHT_GRAY_WOOL));
 	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 

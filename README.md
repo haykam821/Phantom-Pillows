@@ -16,3 +16,5 @@ Phantom Pillows requires the [Fabric modloader](https://fabricmc.net/use/).
 ## Usage
 
 After installing the mod, a new block called the 'Phantom Pillow' will be available. This can be crafted using 8 phantom membranes around a single wool block. This block stops both fall damage (being bouncy instead) and elytra collision damage.
+
+Any block in the `#phantompillows:elytra_cushioning_blocks` tag will prevent damage from being dealt to entities that fly into walls.

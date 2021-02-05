@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import io.github.haykam821.phantompillows.Main;
+import io.github.haykam821.phantompillows.block.PhantomPillowsBlockTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,10 +23,10 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@Unique
-	private boolean isNearSoftBlock(LivingEntity entity) {
+	private boolean isNearElytraCushioningBlock(LivingEntity entity) {
 		BlockPos landingPos = this.getLandingPos();
 		for (Direction direction : Direction.values()) {
-			if (entity.getEntityWorld().getBlockState(landingPos.offset(direction)).getBlock() == Main.PHANTOM_PILLOW) {
+			if (entity.getEntityWorld().getBlockState(landingPos.offset(direction)).isIn(PhantomPillowsBlockTags.ELYTRA_CUSHIONING_BLOCKS)) {
 				return true;
 			}
 		}
@@ -36,7 +36,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
 	private void playSound(LivingEntity entity, SoundEvent sound, float volume, float pitch) {
-		if (this.isNearSoftBlock(entity)) {
+		if (this.isNearElytraCushioningBlock(entity)) {
 			super.playSound(SoundEvents.BLOCK_WOOL_FALL, volume, pitch);
 		} else {
 			super.playSound(sound, volume, pitch);
@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private boolean damage(LivingEntity entity, DamageSource source, float amount) {
-		if (!this.isNearSoftBlock(entity)) {
+		if (!this.isNearElytraCushioningBlock(entity)) {
 			return entity.damage(source, amount);
 		}
 		return false;
