@@ -2,6 +2,7 @@ package io.github.haykam821.phantompillows;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -21,5 +22,8 @@ public class Main implements ModInitializer {
 	public void onInitialize() {
 		Registry.register(Registry.BLOCK, PHANTOM_PILLOW_ID, PHANTOM_PILLOW);
 		Registry.register(Registry.ITEM, PHANTOM_PILLOW_ID, PHANTOM_PILLOW_ITEM);
+
+		// Allow phantom pillows to be used as fuel for 100 ticks (5 seconds) of fuel time
+		FuelRegistry.INSTANCE.add(PHANTOM_PILLOW_ITEM, 100);
 	}
 }
