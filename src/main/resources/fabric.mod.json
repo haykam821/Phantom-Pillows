@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"io.github.haykam821.phantompillows.Main"
+		],
+		"fabric-datagen": [
+			"io.github.haykam821.phantompillows.data.PhantomPillowsDatagen"
 		]
 	},
 	"mixins": [

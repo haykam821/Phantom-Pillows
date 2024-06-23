@@ -14,6 +14,48 @@ repositories {
 	}
 }
 
+sourceSets {
+	main {
+		resources {
+			srcDirs += [
+				"src/main/generated"
+			]
+		}
+	}
+
+	datagen {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+		compileClasspath += main.output
+		runtimeClasspath += main.output
+	}
+}
+
+loom {
+	mods {
+		phantompillows {
+			sourceSet(sourceSets.main)
+		}
+	}
+
+	runs {
+		datagen {
+			server()
+			source = sourceSets.datagen
+
+			name = "Data Generation"
+			runDir = "build/datagen"
+
+			vmArg("-Dfabric-api.datagen")
+			vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+		}
+	}
+
+	createRemapConfigurations(sourceSets.datagen)
+}
+
+assemble.dependsOn(runDatagen)
+
 dependencies {
 	// Main
 	minecraft("com.mojang:minecraft:${project.minecraft_version}")
@@ -22,6 +64,7 @@ dependencies {
 
 	// Fabric API (helper)
 	modImplementation(fabricApi.module("fabric-registry-sync-v0", project.fabric_version))
+	modDatagenImplementation(fabricApi.module("fabric-data-generation-api-v1", project.fabric_version))
 
 	// Fabric API (direct)
 	modImplementation(fabricApi.module("fabric-content-registries-v0", project.fabric_version))
@@ -49,4 +92,5 @@ tasks.withType(JavaCompile) {
 
 jar {
 	from "LICENSE"
+	exclude ".cache/**"
 }
