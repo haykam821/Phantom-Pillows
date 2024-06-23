@@ -9,7 +9,8 @@
 	],
 	"contact": {
 		"homepage": "https://github.com/haykam821/Phantom-Pillows#readme",
-		"issues": "https://github.com/haykam821/Phantom-Pillows/issues"
+		"issues": "https://github.com/haykam821/Phantom-Pillows/issues",
+		"sources": "https://github.com/haykam821/Phantom-Pillows"
 	},
 	"license": "MIT",
 	"icon": "assets/phantompillows/icon.png",
