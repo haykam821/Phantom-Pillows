@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Unique
 	private boolean isNearElytraCushioningBlock(LivingEntity entity) {
-		BlockPos landingPos = this.getLandingPos();
+		BlockPos landingPos = this.getSteppingPos();
 		for (Direction direction : Direction.values()) {
 			if (entity.getEntityWorld().getBlockState(landingPos.offset(direction)).isIn(PhantomPillowsBlockTags.ELYTRA_CUSHIONING_BLOCKS)) {
 				return true;
