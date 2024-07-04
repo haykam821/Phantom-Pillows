@@ -12,5 +12,9 @@ public class PhantomPillowsBlockLootTableProvider extends FabricBlockLootTablePr
 	@Override
 	public void generate() {
 		this.addDrop(Main.PHANTOM_PILLOW);
+
+		this.lootTables.forEach((id, lootTable) -> {
+			lootTable.randomSequenceId(id);
+		});
 	}
 }
