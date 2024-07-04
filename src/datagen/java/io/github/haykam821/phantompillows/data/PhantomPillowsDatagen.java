@@ -9,8 +9,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 public class PhantomPillowsDatagen implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
-		dataGenerator.addProvider(PhantomPillowsBlockLootTableProvider::new);
-		dataGenerator.addProvider(PhantomPillowsBlockTagProvider::new);
-		dataGenerator.addProvider(PhantomPillowsModelProvider::new);
+		FabricDataGenerator.Pack pack = dataGenerator.createPack();
+
+		pack.addProvider(PhantomPillowsBlockLootTableProvider::new);
+		pack.addProvider(PhantomPillowsBlockTagProvider::new);
+		pack.addProvider(PhantomPillowsModelProvider::new);
 	}
 }

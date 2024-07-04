@@ -68,6 +68,7 @@ dependencies {
 
 	// Fabric API (direct)
 	modImplementation(fabricApi.module("fabric-content-registries-v0", project.fabric_version))
+	modImplementation(fabricApi.module("fabric-item-group-api-v1", project.fabric_version))
 	modImplementation(fabricApi.module("fabric-object-builder-api-v1", project.fabric_version))
 	modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_version))
 }
