@@ -1,7 +1,5 @@
 package io.github.haykam821.phantompillows;
 
-import java.util.Optional;
-
 import io.github.haykam821.phantompillows.block.PhantomPillowsBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -19,11 +17,11 @@ public final class ElytraCollisionFinder {
 	}
 
 	/**
-	 * {@return the nearest block position to the center of an entity that has collision within a specified box}
+	 * {@return the nearest block position to the center of an entity that has collision within a specified box, or {@code null} if none exists}
 	 * 
 	 * @see net.minecraft.world.WorldAccess#findSupportingBlockPos(Entity, Box)
 	 */
-	private static Optional<BlockPos> findCollidingBlockPos(Entity entity, Box box) {
+	private static BlockPos findCollidingBlockPos(Entity entity, Box box) {
 		Vec3d entityPos = new Vec3d(entity.getX(), entity.getBodyY(0.5), entity.getZ());
 
 		BlockPos nearestPos = null;
@@ -41,10 +39,10 @@ public final class ElytraCollisionFinder {
 			}
 		}
 
-		return Optional.ofNullable(nearestPos);
+		return nearestPos;
 	}
 
-	public static Optional<BlockPos> getCollidingBlockPos(LivingEntity entity) {
+	public static BlockPos getCollidingBlockPos(LivingEntity entity) {
 		Box boundingBox = entity.getBoundingBox();
 		Box box = boundingBox.expand(EPSILON, 0, EPSILON);
 
@@ -52,10 +50,10 @@ public final class ElytraCollisionFinder {
 	}
 
 	public static boolean isNearElytraCushioningBlock(LivingEntity entity) {
-		Optional<BlockPos> pos = getCollidingBlockPos(entity);
-		if (pos.isEmpty()) return false;
+		BlockPos pos = getCollidingBlockPos(entity);
+		if (pos == null) return false;
 
-		BlockState state = entity.getWorld().getBlockState(pos.get());
+		BlockState state = entity.getWorld().getBlockState(pos);
 		return state.isIn(PhantomPillowsBlockTags.ELYTRA_CUSHIONING_BLOCKS);
 	}
 }
