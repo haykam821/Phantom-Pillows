@@ -6,12 +6,8 @@
 		"mmm"
 	],
 	"key": {
-		"m": {
-			"item": "minecraft:phantom_membrane"
-		},
-		"W": {
-			"tag": "minecraft:wool"
-		}
+		"m": "minecraft:phantom_membrane",
+		"W": "#minecraft:wool"
 	},
 	"result": {
 		"id": "phantompillows:phantom_pillow"

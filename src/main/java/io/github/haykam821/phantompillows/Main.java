@@ -2,7 +2,7 @@ package io.github.haykam821.phantompillows;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -11,6 +11,8 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public class Main implements ModInitializer {
@@ -19,8 +21,12 @@ public class Main implements ModInitializer {
 	private static final Identifier PILLOW_ID = Main.identifier("pillow");
 
 	private static final Identifier PHANTOM_PILLOW_ID = Main.identifier("phantom_pillow");
-	public static final Block PHANTOM_PILLOW = new PillowBlock(Block.Settings.copy(Blocks.LIGHT_GRAY_WOOL));
-	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings());
+
+	private static final RegistryKey<Block> PHANTOM_PILLOW_BLOCK_KEY = RegistryKey.of(RegistryKeys.BLOCK, PHANTOM_PILLOW_ID);
+	public static final Block PHANTOM_PILLOW = new PillowBlock(Block.Settings.copy(Blocks.LIGHT_GRAY_WOOL).registryKey(PHANTOM_PILLOW_BLOCK_KEY));
+
+	private static final RegistryKey<Item> PHANTOM_PILLOW_ITEM_KEY = RegistryKey.of(RegistryKeys.ITEM, PHANTOM_PILLOW_ID);
+	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings().registryKey(PHANTOM_PILLOW_ITEM_KEY).useBlockPrefixedTranslationKey());
 
 	@Override
 	public void onInitialize() {
@@ -34,7 +40,9 @@ public class Main implements ModInitializer {
 		});
 
 		// Allow phantom pillows to be used as fuel for 100 ticks (5 seconds) of fuel time
-		FuelRegistry.INSTANCE.add(PHANTOM_PILLOW_ITEM, 100);
+		FuelRegistryEvents.BUILD.register((builder, context) -> {
+			builder.add(PHANTOM_PILLOW_ITEM, context.baseSmeltTime() / 2);
+		});
 	}
 
 	public static Identifier identifier(String path) {

@@ -2,7 +2,10 @@ package io.github.haykam821.phantompillows.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import io.github.haykam821.phantompillows.ElytraCollisionFinder;
 import net.minecraft.entity.Entity;
@@ -19,20 +22,16 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 
-	@Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
-	private void playSound(LivingEntity entity, SoundEvent sound, float volume, float pitch) {
-		if (ElytraCollisionFinder.isNearElytraCushioningBlock(entity)) {
-			super.playSound(SoundEvents.BLOCK_WOOL_FALL, volume, pitch);
-		} else {
-			super.playSound(sound, volume, pitch);
-		}
+	@WrapOperation(method = "checkGlidingCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
+	private void playCushionedSound(LivingEntity entity, SoundEvent sound, float volume, float pitch, Operation<Void> operation) {
+		// Use the wool fall sound when gliding into an elytra cushioning block
+		SoundEvent newSound = ElytraCollisionFinder.isNearElytraCushioningBlock(entity) ? SoundEvents.BLOCK_WOOL_FALL : sound;
+		operation.call(entity, newSound, volume, pitch);
 	}
 
-	@Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-	private boolean damage(LivingEntity entity, DamageSource source, float amount) {
-		if (!ElytraCollisionFinder.isNearElytraCushioningBlock(entity)) {
-			return entity.damage(source, amount);
-		}
-		return false;
+	@WrapWithCondition(method = "checkGlidingCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;serverDamage(Lnet/minecraft/entity/damage/DamageSource;F)V"))
+	private boolean preventCushionedDamage(LivingEntity entity, DamageSource source, float amount) {
+		// Prevent damage when gliding into an elytra cushioning block
+		return !ElytraCollisionFinder.isNearElytraCushioningBlock(entity);
 	}
 }
