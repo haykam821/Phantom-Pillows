@@ -14,11 +14,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class Main implements ModInitializer {
-	public static final String MOD_ID = "phantompillows";
+	private static final String MOD_ID = "phantompillows";
 
-	private static final Identifier PILLOW_ID = new Identifier(MOD_ID, "pillow");
+	private static final Identifier PILLOW_ID = Main.identifier("pillow");
 
-	private static final Identifier PHANTOM_PILLOW_ID = new Identifier(MOD_ID, "phantom_pillow");
+	private static final Identifier PHANTOM_PILLOW_ID = Main.identifier("phantom_pillow");
 	public static final Block PHANTOM_PILLOW = new PillowBlock(Block.Settings.copy(Blocks.LIGHT_GRAY_WOOL));
 	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings());
 
@@ -35,5 +35,9 @@ public class Main implements ModInitializer {
 
 		// Allow phantom pillows to be used as fuel for 100 ticks (5 seconds) of fuel time
 		FuelRegistry.INSTANCE.add(PHANTOM_PILLOW_ITEM, 100);
+	}
+
+	public static Identifier identifier(String path) {
+		return Identifier.of(MOD_ID, path);
 	}
 }
