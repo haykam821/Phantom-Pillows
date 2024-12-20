@@ -14,44 +14,12 @@ repositories {
 	}
 }
 
-sourceSets {
-	main {
-		resources {
-			srcDirs += [
-				"src/main/generated"
-			]
-		}
+fabricApi {
+	configureDataGeneration {
+		modId = "phantompillows"
+		createSourceSet = true
+		client = true
 	}
-
-	datagen {
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
-		compileClasspath += main.output
-		runtimeClasspath += main.output
-	}
-}
-
-loom {
-	mods {
-		phantompillows {
-			sourceSet(sourceSets.main)
-		}
-	}
-
-	runs {
-		datagen {
-			server()
-			source = sourceSets.datagen
-
-			name = "Data Generation"
-			runDir = "build/datagen"
-
-			vmArg("-Dfabric-api.datagen")
-			vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-		}
-	}
-
-	createRemapConfigurations(sourceSets.datagen)
 }
 
 assemble.dependsOn(runDatagen)
@@ -93,5 +61,4 @@ tasks.withType(JavaCompile) {
 
 jar {
 	from "LICENSE"
-	exclude ".cache/**"
 }
