@@ -2,7 +2,6 @@ package io.github.haykam821.phantompillows;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -20,7 +19,7 @@ public class Main implements ModInitializer {
 	private static final Identifier PILLOW_ID = new Identifier(MOD_ID, "pillow");
 
 	private static final Identifier PHANTOM_PILLOW_ID = new Identifier(MOD_ID, "phantom_pillow");
-	public static final Block PHANTOM_PILLOW = new PillowBlock(FabricBlockSettings.copy(Blocks.LIGHT_GRAY_WOOL));
+	public static final Block PHANTOM_PILLOW = new PillowBlock(Block.Settings.copy(Blocks.LIGHT_GRAY_WOOL));
 	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings());
 
 	@Override
