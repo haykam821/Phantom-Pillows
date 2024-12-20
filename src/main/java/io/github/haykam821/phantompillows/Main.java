@@ -17,12 +17,16 @@ import net.minecraft.util.Identifier;
 public class Main implements ModInitializer {
 	public static final String MOD_ID = "phantompillows";
 
+	private static final Identifier PILLOW_ID = new Identifier(MOD_ID, "pillow");
+
 	private static final Identifier PHANTOM_PILLOW_ID = new Identifier(MOD_ID, "phantom_pillow");
 	public static final Block PHANTOM_PILLOW = new PillowBlock(FabricBlockSettings.copy(Blocks.LIGHT_GRAY_WOOL));
 	public static final BlockItem PHANTOM_PILLOW_ITEM = new BlockItem(PHANTOM_PILLOW, new Item.Settings());
 
 	@Override
 	public void onInitialize() {
+		Registry.register(Registries.BLOCK_TYPE, PILLOW_ID, PillowBlock.CODEC);
+
 		Registry.register(Registries.BLOCK, PHANTOM_PILLOW_ID, PHANTOM_PILLOW);
 		Registry.register(Registries.ITEM, PHANTOM_PILLOW_ID, PHANTOM_PILLOW_ITEM);
 

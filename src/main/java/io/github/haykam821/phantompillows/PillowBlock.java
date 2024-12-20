@@ -1,5 +1,7 @@
 package io.github.haykam821.phantompillows;
 
+import com.mojang.serialization.MapCodec;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -11,6 +13,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class PillowBlock extends Block {
+	public static final MapCodec<PillowBlock> CODEC = Block.createCodec(PillowBlock::new);
+
 	public PillowBlock(Settings settings) {
 		super(settings);
 	}
@@ -32,5 +36,10 @@ public class PillowBlock extends Block {
 				entity.setVelocity(velocity.x, velocity.y * livingModifier * -0.8, velocity.z);
 			}
 		}
+	}
+
+	@Override
+	protected MapCodec<? extends PillowBlock> getCodec() {
+		return CODEC;
 	}
 }
